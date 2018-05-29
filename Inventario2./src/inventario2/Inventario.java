@@ -167,18 +167,16 @@ public class Inventario extends javax.swing.JFrame {
                 
                 modeloBusqueda.addColumn("Existencia");
                 modeloBusqueda.addColumn("Marca");
-                modeloBusqueda.addColumn("Descripcion");
                 Inventario.setModel(modeloBusqueda);
             
-            String datos[] = new String [4];
+            String datos[] = new String [3];
             int contar=0;
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca,Descripcion FROM Producto");
+            ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
             while (Ca.next()) {
                 datos[0]=Ca.getString(1);
                 datos[1]=Ca.getString(2);
                 datos[2]=Ca.getString(3);
-                datos[3]=Ca.getString(4);
                 modeloBusqueda.addRow(datos);
                 contar++;
             }
