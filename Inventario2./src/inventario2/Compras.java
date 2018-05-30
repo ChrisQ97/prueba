@@ -23,7 +23,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  * @author sys515
  */
 public class Compras extends javax.swing.JFrame {
-    
+
     Conexion con = new Conexion();
     Connection Consulta = con.conexion();
     Connection Consulta2 = con.conexion();
@@ -35,13 +35,13 @@ public class Compras extends javax.swing.JFrame {
     public Compras() {
         initComponents();
         AutoCompleteDecorator.decorate(Otro);
-        
+
         try {
-            
+
             Statement sx = Consulta.createStatement();
             ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
             while (Ca.next()) {
-                
+
                 Otro.addItem(Ca.getString(1) + ", " + Ca.getNString(3));
             }
         } catch (SQLException ex) {
@@ -49,29 +49,29 @@ public class Compras extends javax.swing.JFrame {
         }
         TextAutoCompleter ac2 = new TextAutoCompleter(Proveedor);
         try {
-            
+
             Statement sx2 = Consulta2.createStatement();
             ResultSet Ca2 = sx2.executeQuery("SELECT Nit FROM Proveedor");
             while (Ca2.next()) {
                 ac2.addItem(Ca2.getString(1));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private int getidPro(String Nom, String Marca) {
         int id3 = 0;
         try {
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT id FROM Producto WHERE Nombre='" + Nom + "'&& Marca='" + Marca + "'");            
+            ResultSet Ca = sx.executeQuery("SELECT id FROM Producto WHERE Nombre='" + Nom + "'&& Marca='" + Marca + "'");
             while (Ca.next()) {
                 id3 = Integer.parseInt(Ca.getString(1));
             }
             return id3;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -85,7 +85,7 @@ public class Compras extends javax.swing.JFrame {
             ResultSet Ca = sx.executeQuery("SELECT id FROM Proveedor WHERE Nit='" + nit + "'");
             while (Ca.next()) {
                 nit2 = Integer.parseInt(Ca.getString(1));
-                
+
             }
             return nit2;
         } catch (SQLException ex) {
@@ -303,20 +303,26 @@ public class Compras extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private int lotereciente(int idProd) {
+        JOptionPane.showMessageDialog(null, "adentro loterecietne");
         int Loteant = 0;
         try {
+            JOptionPane.showMessageDialog(null, "adentro try");
             Statement xq = Consulta2.createStatement();
-            ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='" + String.valueOf(idProd) + "'&& NoLote=  (SELECT MAX(NoLote) FROM Lote) ");
+            ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"'&& NoLote= (SELECT MAX(NoLote) FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"') ");
+            JOptionPane.showMessageDialog(null, "antes while");
             while (red.next()) {
                 Loteant = Integer.parseInt(red.getString(1));
+                JOptionPane.showMessageDialog(null, "adentro while "+Loteant);
             }
+            JOptionPane.showMessageDialog(null, "fuera while "+Loteant);
             Loteant++;
+            red.close();
             return Loteant;
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
-        
+
     }
 
     private void compra(String PI, String LI) {
@@ -324,53 +330,54 @@ public class Compras extends javax.swing.JFrame {
             PreparedStatement CrearCompra = tr.prepareStatement("INSERT INTO Compra(Proveedor_id,Lote_id) VALUES(?,?)");
             CrearCompra.setString(1, PI);
             CrearCompra.setString(2, LI);
-            
+
             CrearCompra.executeUpdate();
             CrearCompra.close();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private void CrearLote(int idProd, int lotegrande, String idProv) {
         try {
             int idUsuario = 0;
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
-            
+
             PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
                     Statement.RETURN_GENERATED_KEYS);
-            
+
             CrearLot.setString(1, String.valueOf(idProd));
             CrearLot.setString(2, Costo.getText());
             CrearLot.setString(3, Cantidad.getText());
             CrearLot.setString(4, String.valueOf(CostoTotal));
             CrearLot.setString(5, Descripcion.getText());
             CrearLot.setString(6, String.valueOf(lotegrande));
-            
+
             CrearLot.executeUpdate();
-            
+
             try (ResultSet rs = CrearLot.getGeneratedKeys()) {
                 if (!rs.next()) {
                     throw new RuntimeException("no devolvió el ID");
                 }
-                
+
                 idUsuario = rs.getInt(1);
                 CrearLot.close();
-                
+
             }
-            
+
             compra(idProv, String.valueOf(idUsuario));
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int iddd = getidPro(Nombre.getText(), Marca.getText());
         int loteee = lotereciente(iddd);
+        System.out.println(loteee);
         CrearLote(iddd, loteee, String.valueOf(getidProve(Proveedor.getText())));
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -385,7 +392,7 @@ public class Compras extends javax.swing.JFrame {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
-        if (k >= 33 && k <= 45 || k==47) {
+        if (k >= 33 && k <= 45 || k == 47) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
@@ -406,7 +413,7 @@ public class Compras extends javax.swing.JFrame {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
-        if (k >= 33 && k <= 45 || k==47) {
+        if (k >= 33 && k <= 45 || k == 47) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
@@ -418,12 +425,12 @@ public class Compras extends javax.swing.JFrame {
 
     private void OtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OtroActionPerformed
         String Completo = (String) Otro.getSelectedItem();
-    
+
         String[] parts = Completo.split(", ");
-        String part1 = parts[0]; 
-        String part2 = parts[1]; 
+        String part1 = parts[0];
+        String part2 = parts[1];
         Nombre.setText(part1);
-Marca.setText(part2);
+        Marca.setText(part2);
     }//GEN-LAST:event_OtroActionPerformed
 
     /**
