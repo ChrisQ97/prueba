@@ -303,18 +303,18 @@ public class Compras extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private int lotereciente(int idProd) {
-        JOptionPane.showMessageDialog(null, "adentro loterecietne");
+       
         int Loteant = 0;
         try {
-            JOptionPane.showMessageDialog(null, "adentro try");
+            
             Statement xq = Consulta2.createStatement();
             ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"'&& NoLote= (SELECT MAX(NoLote) FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"') ");
-            JOptionPane.showMessageDialog(null, "antes while");
+           
             while (red.next()) {
                 Loteant = Integer.parseInt(red.getString(1));
-                JOptionPane.showMessageDialog(null, "adentro while "+Loteant);
+           
             }
-            JOptionPane.showMessageDialog(null, "fuera while "+Loteant);
+           
             Loteant++;
             red.close();
             return Loteant;
@@ -377,7 +377,6 @@ public class Compras extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int iddd = getidPro(Nombre.getText(), Marca.getText());
         int loteee = lotereciente(iddd);
-        System.out.println(loteee);
         CrearLote(iddd, loteee, String.valueOf(getidProve(Proveedor.getText())));
 
     }//GEN-LAST:event_jButton1ActionPerformed

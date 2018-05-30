@@ -30,8 +30,9 @@ public class Ingreso extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection cn = con.conexion();
     Connection tr = con.conexion();
+    Connection res = con.conexion();
     Connection Consulta = con.conexion();
-
+    private String restar;
     /**
      * Creates new form Ingreso
      */
@@ -320,6 +321,7 @@ public class Ingreso extends javax.swing.JFrame {
     }
 
     private int CrearProducto() {
+        restar=null;
         int idUsuario = 0;
         try {
             PreparedStatement CrearProd = cn.prepareStatement("INSERT INTO Producto(Nombre,Existencia,Marca) VALUES(?,?,?)",
@@ -329,7 +331,7 @@ public class Ingreso extends javax.swing.JFrame {
             CrearProd.setString(2, Cantidad.getText());
             CrearProd.setString(3, Marca.getText());
             CrearProd.executeUpdate();
-
+            restar=Cantidad.getText();
             JOptionPane.showMessageDialog(null, "Datos guardados exitosamente.");
             try (ResultSet rs = CrearProd.getGeneratedKeys()) {
                 if (!rs.next()) {
@@ -338,14 +340,26 @@ public class Ingreso extends javax.swing.JFrame {
 
                 idUsuario = rs.getInt(1);
                 CrearProd.close();
+                restar(idUsuario);
                 return idUsuario;
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return idUsuario;
 
+    }
+    private void restar(int r)
+    {
+        try {
+            PreparedStatement ActualizarProveedor = res.prepareStatement("UPDATE Producto SET Existencia =Existencia-'"+restar+"' WHERE id='"+String.valueOf(r)+"' ");
+            ActualizarProveedor.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private int idPro(String Nit)
     {
@@ -396,6 +410,7 @@ public class Ingreso extends javax.swing.JFrame {
             if (CR == 0) {
                 int id = 0;
                 id = CrearProducto();
+                
                 if (id != 0) {
                     CrearLote(id);
 
