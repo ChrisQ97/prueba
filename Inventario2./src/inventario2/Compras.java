@@ -6,6 +6,7 @@
 package inventario2;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -218,6 +219,12 @@ public class Compras extends javax.swing.JFrame {
 
         jLabel2.setText("Cantidad");
 
+        Cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CantidadKeyTyped(evt);
+            }
+        });
+
         Nombre.setText("Nombre");
 
         Marca.setText("Marca");
@@ -225,6 +232,12 @@ public class Compras extends javax.swing.JFrame {
         jLabel5.setText("Descripcion");
 
         jLabel6.setText("CostoUnitario");
+
+        Costo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CostoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,25 +353,13 @@ public class Compras extends javax.swing.JFrame {
          try {
             int idUsuario=0;
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
-              if(CostoTotal<0)
-            {
-                CostoTotal=CostoTotal*-1;
-            }
+          
             PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
                     Statement.RETURN_GENERATED_KEYS);
-              int xx=Integer.parseInt(Costo.getText());
-            int xy=Integer.parseInt(Cantidad.getText());
-            if(xx<0)
-            {
-                xx=xx*-1;
-            }
-            if(xy<0)
-            {
-                xy=xy*-1;
-            }
+
             CrearLot.setString(1, String.valueOf(idProd));
-             CrearLot.setString(2,String.valueOf(xx));
-            CrearLot.setString(3, String.valueOf(xy));
+             CrearLot.setString(2,Costo.getText());
+            CrearLot.setString(3, Cantidad.getText());
             CrearLot.setString(4, String.valueOf(CostoTotal));
             CrearLot.setString(5, Descripcion.getText());
             CrearLot.setString(6, String.valueOf(lotegrande));
@@ -390,6 +391,48 @@ public class Compras extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void CostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CostoKeyTyped
+         int k = (int) evt.getKeyChar();
+        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 241 || k == 209) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+          if (k >= 33 && k <= 47 ) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 10) {
+            Costo.transferFocus();
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CostoKeyTyped
+
+    private void CantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantidadKeyTyped
+    int k = (int) evt.getKeyChar();
+        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 241 || k == 209) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k >= 33 && k <= 47 ) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 10) {
+            Cantidad.transferFocus();
+        }
+            // TODO add your handling code here:
+    }//GEN-LAST:event_CantidadKeyTyped
+
+    
     /**
      * @param args the command line arguments
      */

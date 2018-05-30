@@ -287,11 +287,13 @@ public class Ingreso extends javax.swing.JFrame {
 
         try {
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
+           
             PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,1,now())",
                     Statement.RETURN_GENERATED_KEYS);
-
+            
+       
             CrearLot.setString(1, String.valueOf(id));
-            CrearLot.setString(2, Costo.getText());
+            CrearLot.setString(2,Costo.getText());
             CrearLot.setString(3, Cantidad.getText());
             CrearLot.setString(4, String.valueOf(CostoTotal));
             CrearLot.setString(5, Descripcion.getText());
@@ -322,6 +324,7 @@ public class Ingreso extends javax.swing.JFrame {
         try {
             PreparedStatement CrearProd = cn.prepareStatement("INSERT INTO Producto(Nombre,Existencia,Marca) VALUES(?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
+           
             CrearProd.setString(1, Producto.getText());
             CrearProd.setString(2, Cantidad.getText());
             CrearProd.setString(3, Marca.getText());
@@ -448,6 +451,10 @@ public class Ingreso extends javax.swing.JFrame {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
+        if (k >= 33 && k <= 47 ) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
         if (k == 10) {
             Cantidad.transferFocus();
         }
@@ -462,6 +469,10 @@ public class Ingreso extends javax.swing.JFrame {
         if (k == 241 || k == 209) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+          if (k >= 33 && k <= 47 ) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
         if (k == 10) {
             Costo.transferFocus();
