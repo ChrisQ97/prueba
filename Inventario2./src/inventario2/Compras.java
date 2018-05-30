@@ -7,6 +7,7 @@ package inventario2;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,6 +25,8 @@ public class Compras extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection Consulta = con.conexion();
         Connection Consulta2 = con.conexion();
+                Connection tr = con.conexion();
+
 
 
     /**
@@ -57,6 +60,40 @@ public class Compras extends javax.swing.JFrame {
         }
         
     }
+    private int getidPro(String Nom, String Marca)
+            
+    {
+        int id3=0;
+        try {
+            Statement sx = Consulta.createStatement();
+            ResultSet Ca = sx.executeQuery("SELECT id FROM Producto WHERE Nombre='"+Nom+"'&& Marca='"+Marca+"'");   
+            while(Ca.next())
+            {
+                id3=Integer.parseInt(Ca.getString(1));
+            }
+            return id3;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    private int getidProve(String nit)
+    {   int nit2=0;
+        try {
+            Statement sx = Consulta.createStatement();
+            ResultSet Ca = sx.executeQuery("SELECT id FROM Proveedor WHERE Nit='"+nit+"'");
+            while(Ca.next())
+            {
+                nit2=Integer.parseInt(Ca.getString(1));
+                
+            }
+            return nit2;
+        } catch (SQLException ex) {
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,15 +116,16 @@ public class Compras extends javax.swing.JFrame {
         Serie = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         Proveedor = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
+        id = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         Cantidad = new javax.swing.JTextField();
         Nombre = new javax.swing.JLabel();
         Marca = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        Descripcion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        CostoU = new javax.swing.JTextField();
+        Costo = new javax.swing.JTextField();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,7 +160,14 @@ public class Compras extends javax.swing.JFrame {
 
         jLabel9.setText("Proveedor");
 
-        jLabel10.setText("jLabel10");
+        id.setText("id");
+
+        jButton1.setText("Comprar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,7 +188,8 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addGap(18, 18, 18)
                             .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel10))
+                    .addComponent(id)
+                    .addComponent(jButton1))
                 .addContainerGap(145, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -164,8 +210,10 @@ public class Compras extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addComponent(id)
+                .addGap(53, 53, 53)
+                .addComponent(jButton1)
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Cantidad");
@@ -203,12 +251,12 @@ public class Compras extends javax.swing.JFrame {
                                 .addGap(59, 59, 59)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CostoU))))
+                                .addComponent(Costo))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(51, Short.MAX_VALUE))
@@ -229,12 +277,12 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(Nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Marca)
                             .addComponent(jLabel6)
-                            .addComponent(CostoU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Costo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(258, 258, 258))
+                            .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(275, 275, 275))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44))))
@@ -245,13 +293,89 @@ public class Compras extends javax.swing.JFrame {
 
     private void AquiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AquiActionPerformed
         String completo=Aqui.getText();
-        
         String[] parts = completo.split(", ");
-        String part1 = parts[0]; // 123
-        String part2 = parts[1]; // 654321
+        String part1 = parts[0]; 
+        String part2 = parts[1]; 
         Nombre.setText(part1);
         Marca.setText(part2);
     }//GEN-LAST:event_AquiActionPerformed
+
+    private int lotereciente(int idProd)
+    {
+        int Loteant=0;
+        try {
+            Statement xq = Consulta2.createStatement();
+            ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"'&& NoLote=  (SELECT MAX(NoLote) FROM Lote) ");
+            while(red.next())
+            {
+                Loteant=Integer.parseInt(red.getString(1));
+            }
+            Loteant++;
+            return Loteant;
+        } catch (SQLException ex) {
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
+    }
+     private void compra(String PI,String LI)
+    {
+        try {
+            PreparedStatement CrearCompra = tr.prepareStatement("INSERT INTO Compra(Proveedor_id,Lote_id) VALUES(?,?)");
+            CrearCompra.setString(1, PI);
+            CrearCompra.setString(2, LI);
+            
+
+            CrearCompra.executeUpdate();
+            CrearCompra.close();
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+            
+    }
+     private void CrearLote(int idProd,int lotegrande,String idProv) {
+         try {
+            int idUsuario=0;
+            float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
+            PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            CrearLot.setString(1, String.valueOf(idProd));
+            CrearLot.setString(2, Costo.getText());
+            CrearLot.setString(3, Cantidad.getText());
+            CrearLot.setString(4, String.valueOf(CostoTotal));
+            CrearLot.setString(5, Descripcion.getText());
+            CrearLot.setString(6, String.valueOf(lotegrande));
+
+            CrearLot.executeUpdate();
+            
+            
+              try (ResultSet rs = CrearLot.getGeneratedKeys()) {
+                if (!rs.next()) {
+                    throw new RuntimeException("no devolvió el ID");
+                }
+
+                idUsuario = rs.getInt(1);
+                CrearLot.close();
+               
+            }
+            
+            compra(idProv,String.valueOf(idUsuario));
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int iddd=getidPro(Nombre.getText(),Marca.getText());
+        int loteee=lotereciente(iddd);
+        CrearLote(iddd,loteee,String.valueOf(getidProve(Proveedor.getText())));
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,13 +415,15 @@ public class Compras extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Aqui;
     private javax.swing.JTextField Cantidad;
-    private javax.swing.JTextField CostoU;
+    private javax.swing.JTextField Costo;
+    private javax.swing.JTextField Descripcion;
     private javax.swing.JLabel Marca;
     private javax.swing.JLabel Nombre;
     private javax.swing.JTextField Proveedor;
     private javax.swing.JTextField Serie;
+    private javax.swing.JLabel id;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -309,6 +435,5 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

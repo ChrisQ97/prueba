@@ -68,7 +68,7 @@
                               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CostoU" max="32767" attributes="0"/>
+                              <Component id="Costo" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -76,7 +76,7 @@
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="223" max="-2" attributes="0"/>
+                      <Component id="Descripcion" min="-2" pref="223" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -102,14 +102,14 @@
                           <Component id="Nombre" max="32767" attributes="0"/>
                           <Component id="Marca" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="CostoU" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Costo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="148" max="-2" attributes="0"/>
+                          <Component id="Descripcion" min="-2" pref="148" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="258" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="275" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
@@ -154,7 +154,8 @@
                               <Component id="Serie" min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="id" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="145" max="32767" attributes="0"/>
               </Group>
@@ -180,8 +181,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="Proveedor" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="272" max="32767" attributes="0"/>
+                  <Component id="id" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="194" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -216,10 +219,18 @@
         </Component>
         <Component class="javax.swing.JTextField" name="Proveedor">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel10">
+        <Component class="javax.swing.JLabel" name="id">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel10"/>
+            <Property name="text" type="java.lang.String" value="id"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Comprar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -245,14 +256,14 @@
         <Property name="text" type="java.lang.String" value="Descripcion"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="Descripcion">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="text" type="java.lang.String" value="CostoUnitario"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="CostoU">
+    <Component class="javax.swing.JTextField" name="Costo">
     </Component>
   </SubComponents>
 </Form>
