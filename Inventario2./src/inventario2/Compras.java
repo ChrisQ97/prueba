@@ -340,12 +340,25 @@ public class Compras extends javax.swing.JFrame {
          try {
             int idUsuario=0;
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
+              if(CostoTotal<0)
+            {
+                CostoTotal=CostoTotal*-1;
+            }
             PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
                     Statement.RETURN_GENERATED_KEYS);
-
+              int xx=Integer.parseInt(Costo.getText());
+            int xy=Integer.parseInt(Cantidad.getText());
+            if(xx<0)
+            {
+                xx=xx*-1;
+            }
+            if(xy<0)
+            {
+                xy=xy*-1;
+            }
             CrearLot.setString(1, String.valueOf(idProd));
-            CrearLot.setString(2, Costo.getText());
-            CrearLot.setString(3, Cantidad.getText());
+             CrearLot.setString(2,String.valueOf(xx));
+            CrearLot.setString(3, String.valueOf(xy));
             CrearLot.setString(4, String.valueOf(CostoTotal));
             CrearLot.setString(5, Descripcion.getText());
             CrearLot.setString(6, String.valueOf(lotegrande));
