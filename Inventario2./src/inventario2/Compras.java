@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -25,24 +26,23 @@ public class Compras extends javax.swing.JFrame {
     
     Conexion con = new Conexion();
     Connection Consulta = con.conexion();
-        Connection Consulta2 = con.conexion();
-                Connection tr = con.conexion();
-
-
+    Connection Consulta2 = con.conexion();
+    Connection tr = con.conexion();
 
     /**
      * Creates new form Compras
      */
     public Compras() {
         initComponents();
-        TextAutoCompleter ac = new TextAutoCompleter(Aqui);
+        AutoCompleteDecorator.decorate(Otro);
+        
         try {
             
             Statement sx = Consulta.createStatement();
             ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
             while (Ca.next()) {
-                ac.addItem(Ca.getString(1) + ", " + Ca.getNString(3));
                 
+                Otro.addItem(Ca.getString(1) + ", " + Ca.getNString(3));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,16 +61,14 @@ public class Compras extends javax.swing.JFrame {
         }
         
     }
-    private int getidPro(String Nom, String Marca)
-            
-    {
-        int id3=0;
+
+    private int getidPro(String Nom, String Marca) {
+        int id3 = 0;
         try {
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT id FROM Producto WHERE Nombre='"+Nom+"'&& Marca='"+Marca+"'");   
-            while(Ca.next())
-            {
-                id3=Integer.parseInt(Ca.getString(1));
+            ResultSet Ca = sx.executeQuery("SELECT id FROM Producto WHERE Nombre='" + Nom + "'&& Marca='" + Marca + "'");            
+            while (Ca.next()) {
+                id3 = Integer.parseInt(Ca.getString(1));
             }
             return id3;
             
@@ -79,14 +77,14 @@ public class Compras extends javax.swing.JFrame {
         }
         return 0;
     }
-    private int getidProve(String nit)
-    {   int nit2=0;
+
+    private int getidProve(String nit) {
+        int nit2 = 0;
         try {
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT id FROM Proveedor WHERE Nit='"+nit+"'");
-            while(Ca.next())
-            {
-                nit2=Integer.parseInt(Ca.getString(1));
+            ResultSet Ca = sx.executeQuery("SELECT id FROM Proveedor WHERE Nit='" + nit + "'");
+            while (Ca.next()) {
+                nit2 = Integer.parseInt(Ca.getString(1));
                 
             }
             return nit2;
@@ -107,7 +105,6 @@ public class Compras extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        Aqui = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -127,6 +124,7 @@ public class Compras extends javax.swing.JFrame {
         Descripcion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         Costo = new javax.swing.JTextField();
+        Otro = new javax.swing.JComboBox<>();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,12 +140,6 @@ public class Compras extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Aqui.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AquiActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Producto");
 
@@ -239,6 +231,12 @@ public class Compras extends javax.swing.JFrame {
             }
         });
 
+        Otro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OtroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -247,15 +245,14 @@ public class Compras extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Aqui, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,7 +261,8 @@ public class Compras extends javax.swing.JFrame {
                                 .addGap(59, 59, 59)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Costo))))
+                                .addComponent(Costo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Otro, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel5)
@@ -277,12 +275,12 @@ public class Compras extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Aqui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(Otro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -295,7 +293,7 @@ public class Compras extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(275, 275, 275))
+                        .addGap(292, 292, 292))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44))))
@@ -304,24 +302,13 @@ public class Compras extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AquiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AquiActionPerformed
-        String completo=Aqui.getText();
-        String[] parts = completo.split(", ");
-        String part1 = parts[0]; 
-        String part2 = parts[1]; 
-        Nombre.setText(part1);
-        Marca.setText(part2);
-    }//GEN-LAST:event_AquiActionPerformed
-
-    private int lotereciente(int idProd)
-    {
-        int Loteant=0;
+    private int lotereciente(int idProd) {
+        int Loteant = 0;
         try {
             Statement xq = Consulta2.createStatement();
-            ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='"+String.valueOf(idProd)+"'&& NoLote=  (SELECT MAX(NoLote) FROM Lote) ");
-            while(red.next())
-            {
-                Loteant=Integer.parseInt(red.getString(1));
+            ResultSet red = xq.executeQuery("SELECT NoLote FROM Lote WHERE Producto_id ='" + String.valueOf(idProd) + "'&& NoLote=  (SELECT MAX(NoLote) FROM Lote) ");
+            while (red.next()) {
+                Loteant = Integer.parseInt(red.getString(1));
             }
             Loteant++;
             return Loteant;
@@ -329,70 +316,67 @@ public class Compras extends javax.swing.JFrame {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
-
+        
     }
-     private void compra(String PI,String LI)
-    {
+
+    private void compra(String PI, String LI) {
         try {
             PreparedStatement CrearCompra = tr.prepareStatement("INSERT INTO Compra(Proveedor_id,Lote_id) VALUES(?,?)");
             CrearCompra.setString(1, PI);
             CrearCompra.setString(2, LI);
             
-
             CrearCompra.executeUpdate();
             CrearCompra.close();
-        
-        
+            
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-            
+        
     }
-     private void CrearLote(int idProd,int lotegrande,String idProv) {
-         try {
-            int idUsuario=0;
+
+    private void CrearLote(int idProd, int lotegrande, String idProv) {
+        try {
+            int idUsuario = 0;
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
-          
+            
             PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
                     Statement.RETURN_GENERATED_KEYS);
-
+            
             CrearLot.setString(1, String.valueOf(idProd));
-             CrearLot.setString(2,Costo.getText());
+            CrearLot.setString(2, Costo.getText());
             CrearLot.setString(3, Cantidad.getText());
             CrearLot.setString(4, String.valueOf(CostoTotal));
             CrearLot.setString(5, Descripcion.getText());
             CrearLot.setString(6, String.valueOf(lotegrande));
-
+            
             CrearLot.executeUpdate();
             
-            
-              try (ResultSet rs = CrearLot.getGeneratedKeys()) {
+            try (ResultSet rs = CrearLot.getGeneratedKeys()) {
                 if (!rs.next()) {
                     throw new RuntimeException("no devolvió el ID");
                 }
-
+                
                 idUsuario = rs.getInt(1);
                 CrearLot.close();
-               
+                
             }
             
-            compra(idProv,String.valueOf(idUsuario));
-             
+            compra(idProv, String.valueOf(idUsuario));
+            
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int iddd=getidPro(Nombre.getText(),Marca.getText());
-        int loteee=lotereciente(iddd);
-        CrearLote(iddd,loteee,String.valueOf(getidProve(Proveedor.getText())));
+        int iddd = getidPro(Nombre.getText(), Marca.getText());
+        int loteee = lotereciente(iddd);
+        CrearLote(iddd, loteee, String.valueOf(getidProve(Proveedor.getText())));
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CostoKeyTyped
-         int k = (int) evt.getKeyChar();
+        int k = (int) evt.getKeyChar();
         if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
@@ -401,7 +385,7 @@ public class Compras extends javax.swing.JFrame {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
-          if (k >= 33 && k <= 47 ) {
+        if (k >= 33 && k <= 47) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
@@ -413,7 +397,7 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_CostoKeyTyped
 
     private void CantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantidadKeyTyped
-    int k = (int) evt.getKeyChar();
+        int k = (int) evt.getKeyChar();
         if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
@@ -422,17 +406,26 @@ public class Compras extends javax.swing.JFrame {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
-        if (k >= 33 && k <= 47 ) {
+        if (k >= 33 && k <= 47) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar Simbolos!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
         if (k == 10) {
             Cantidad.transferFocus();
         }
-            // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_CantidadKeyTyped
 
+    private void OtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OtroActionPerformed
+        String Completo = (String) Otro.getSelectedItem();
     
+        String[] parts = Completo.split(", ");
+        String part1 = parts[0]; 
+        String part2 = parts[1]; 
+        Nombre.setText(part1);
+Marca.setText(part2);
+    }//GEN-LAST:event_OtroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -469,12 +462,12 @@ public class Compras extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Aqui;
     private javax.swing.JTextField Cantidad;
     private javax.swing.JTextField Costo;
     private javax.swing.JTextField Descripcion;
     private javax.swing.JLabel Marca;
     private javax.swing.JLabel Nombre;
+    private javax.swing.JComboBox<String> Otro;
     private javax.swing.JTextField Proveedor;
     private javax.swing.JTextField Serie;
     private javax.swing.JLabel id;
