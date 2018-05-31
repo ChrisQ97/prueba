@@ -11,7 +11,8 @@ package inventario2;
  */
 public class Menu extends javax.swing.JFrame {
 
-     Inventario s =new Inventario();
+    Inventario s = new Inventario();
+
     /**
      * Creates new form Menu
      */
@@ -92,11 +93,11 @@ public class Menu extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Compras trd=new Compras();
+        Compras trd = new Compras();
         trd.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
