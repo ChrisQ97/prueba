@@ -5,6 +5,9 @@
  */
 package inventario2;
 
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +15,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,50 +24,64 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Inventario extends javax.swing.JFrame {
 
-    Ingreso ss=new Ingreso();
-        Conexion con = new Conexion();
+    Ingreso ss = new Ingreso();
+    Conexion con = new Conexion();
     Connection cn = con.conexion();
     Connection tr = con.conexion();
     Connection Consulta = con.conexion();
+
     /**
      * Creates new form Inventario
      */
     public Inventario() {
         initComponents();
-        this.setSize(800,600);
+        this.setSize(800, 600);
+
         try {
-            
-            DefaultTableModel modeloBusqueda = new DefaultTableModel()
-            {
-                public boolean isCellEditable(int rowIndex,int columnIndex)
-                {
+
+            DefaultTableModel modeloBusqueda = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
             };
-                modeloBusqueda.addColumn("Nombre");
-                modeloBusqueda.addColumn("Existencia");
-                modeloBusqueda.addColumn("Marca");
-                Inventario.setModel(modeloBusqueda);
-            
-            String datos[] = new String [3];
-            int contar=0;
+            modeloBusqueda.addColumn("Nombre");
+            modeloBusqueda.addColumn("Existencia");
+            modeloBusqueda.addColumn("Marca");
+            Inventario.setModel(modeloBusqueda);
+
+            String datos[] = new String[3];
+            int contar = 0;
             Statement sx = Consulta.createStatement();
             ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
             while (Ca.next()) {
-                datos[0]=Ca.getString(1);
-                datos[1]=Ca.getString(2);
-                datos[2]=Ca.getString(3);
+                datos[0] = Ca.getString(1);
+                datos[1] = Ca.getString(2);
+                datos[2] = Ca.getString(3);
                 modeloBusqueda.addRow(datos);
                 contar++;
             }
             Inventario.setModel(modeloBusqueda);
-            if(contar==0)
-            {
-            JOptionPane.showMessageDialog(null, "No hay Productos en la base de datos");
+            if (contar == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Productos en la base de datos");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
+         Inventario.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 2) {
+                    
+                    String x = String.valueOf(Inventario.getValueAt(Inventario.getSelectedRow(), 2));
+                     String xr = String.valueOf(Inventario.getValueAt(Inventario.getSelectedRow(), 0));
+                    System.out.println(x+" "+xr);
+                    MostrarLotes ere=new MostrarLotes(xr,x);
+                    ere.setVisible(true);
+                }
+            }
+        });
     }
 
     /**
@@ -95,6 +113,19 @@ public class Inventario extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        Inventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                InventarioMousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InventarioMouseClicked(evt);
+            }
+        });
+        Inventario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                InventarioKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(Inventario);
 
         jLabel1.setText("INVENTARIO");
@@ -154,46 +185,58 @@ public class Inventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActActionPerformed
-         try {
-            
-            DefaultTableModel modeloBusqueda = new DefaultTableModel()
-            {
-                public boolean isCellEditable(int rowIndex,int columnIndex)
-                {
+        try {
+
+            DefaultTableModel modeloBusqueda = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
             };
-                modeloBusqueda.addColumn("Nombre");
-                
-                modeloBusqueda.addColumn("Existencia");
-                modeloBusqueda.addColumn("Marca");
-                Inventario.setModel(modeloBusqueda);
-            
-            String datos[] = new String [3];
-            int contar=0;
+            modeloBusqueda.addColumn("Nombre");
+
+            modeloBusqueda.addColumn("Existencia");
+            modeloBusqueda.addColumn("Marca");
+            Inventario.setModel(modeloBusqueda);
+
+            String datos[] = new String[3];
+            int contar = 0;
             Statement sx = Consulta.createStatement();
             ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
             while (Ca.next()) {
-                datos[0]=Ca.getString(1);
-                datos[1]=Ca.getString(2);
-                datos[2]=Ca.getString(3);
+                datos[0] = Ca.getString(1);
+                datos[1] = Ca.getString(2);
+                datos[2] = Ca.getString(3);
                 modeloBusqueda.addRow(datos);
                 contar++;
             }
             Inventario.setModel(modeloBusqueda);
-            if(contar==0)
-            {
-            JOptionPane.showMessageDialog(null, "No hay Productos en la base de datos");
+            if (contar == 0) {
+                JOptionPane.showMessageDialog(null, "No hay Productos en la base de datos");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
     }//GEN-LAST:event_ActActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            ss.setVisible(true);
+        ss.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void InventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventarioMouseClicked
+
+
+    }//GEN-LAST:event_InventarioMouseClicked
+
+    private void InventarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InventarioMousePressed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InventarioMousePressed
+
+    private void InventarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_InventarioKeyReleased
+
+           }//GEN-LAST:event_InventarioKeyReleased
 
     /**
      * @param args the command line arguments

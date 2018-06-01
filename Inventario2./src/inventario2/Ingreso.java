@@ -41,7 +41,7 @@ public class Ingreso extends javax.swing.JFrame {
     public Ingreso() {
         initComponents();
         AutoCompleteDecorator.decorate(Otro);
-
+        
           try {
 
             Statement sx = Consulta.createStatement();
