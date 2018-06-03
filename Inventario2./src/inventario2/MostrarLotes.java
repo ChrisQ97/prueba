@@ -29,36 +29,54 @@ public class MostrarLotes extends javax.swing.JFrame {
      */
     public MostrarLotes(String Marca,String Nombre) {
         initComponents();
-        try {
+        this.setSize(1200, 1000);
+        this.Marca.setText(Marca);
+        this.Nombre.setText(Nombre);
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE); 
 
+       
+      
+          
             DefaultTableModel modeloBusqueda = new DefaultTableModel() {
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
             };
             modeloBusqueda.addColumn("No Lote");
-            modeloBusqueda.addColumn("Existencia");
-            modeloBusqueda.addColumn("Marca");
+            modeloBusqueda.addColumn("Fecha");
+            modeloBusqueda.addColumn("Cantidad");
+            modeloBusqueda.addColumn("Costo Unitario");
+            modeloBusqueda.addColumn("Costo Total");
+            modeloBusqueda.addColumn("Descripcion");
+            
             Lote.setModel(modeloBusqueda);
 
-            String datos[] = new String[3];
-            int contar = 0;
+            String datos[] = new String[6];
+
+          try {
+
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT Nombre,Existencia,Marca FROM Producto");
+            ResultSet Ca = sx.executeQuery("SELECT L.NoLote,L.Fecha,L.Cantidad,L.CostoUnitario,L.CostoTotal,L.Descripcion FROM Lote L\n" +
+"inner JOIN Producto P \n" +
+"on P.id=L.Producto_id WHERE P.Marca='"+Marca+"' && P.Nombre='"+Nombre+"';");
+          
             while (Ca.next()) {
+               
                 datos[0] = Ca.getString(1);
                 datos[1] = Ca.getString(2);
                 datos[2] = Ca.getString(3);
+                datos[3] = Ca.getString(4);
+                datos[4] = Ca.getString(5);
+                datos[5] = Ca.getString(6);
                 modeloBusqueda.addRow(datos);
-                contar++;
+                
             }
             Lote.setModel(modeloBusqueda);
-            if (contar == 0) {
-                JOptionPane.showMessageDialog(null, "No hay Productos en la base de datos");
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Lote.setVisible(true);
         
     }
 
@@ -73,6 +91,10 @@ public class MostrarLotes extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         Lote = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        Nombre = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        Marca = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,21 +116,44 @@ public class MostrarLotes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Lote);
 
+        jLabel1.setText("Producto");
+
+        Nombre.setText("Nombre");
+
+        jLabel3.setText("Marca");
+
+        Marca.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 44, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Nombre)
+                .addGap(96, 96, 96)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Marca)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Nombre)
+                    .addComponent(jLabel3)
+                    .addComponent(Marca))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,13 +193,17 @@ public class MostrarLotes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MostrarLotes(null,null).setVisible(true);
+               new MostrarLotes("","").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Lote;
+    private javax.swing.JLabel Marca;
+    private javax.swing.JLabel Nombre;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

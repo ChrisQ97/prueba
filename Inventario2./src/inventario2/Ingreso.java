@@ -40,6 +40,7 @@ public class Ingreso extends javax.swing.JFrame {
      */
     public Ingreso() {
         initComponents();
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE); 
         AutoCompleteDecorator.decorate(Otro);
         
           try {

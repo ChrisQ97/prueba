@@ -43,7 +43,7 @@ public class Compras extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(Otro1);
      
        
-    
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE); 
          Costo.setText("");
          Cantidad.setText("");
         try {
@@ -142,6 +142,7 @@ public class Compras extends javax.swing.JFrame {
         Costo = new javax.swing.JTextField();
         Otro = new javax.swing.JComboBox<>();
         Nombre = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -316,6 +317,13 @@ public class Compras extends javax.swing.JFrame {
 
         Nombre.setText("Nombre");
 
+        jButton4.setText("Regresar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -348,7 +356,8 @@ public class Compras extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
                                 .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5))))
+                            .addComponent(jLabel5)))
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -374,7 +383,9 @@ public class Compras extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addComponent(jButton4)))
                 .addContainerGap(148, Short.MAX_VALUE))
         );
 
@@ -574,6 +585,12 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Menu men=new Menu();
+        men.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 //     if(Cantidad.getText().equals("")&&Costo.getText().equals(""))   usando tabla
 //     {
 //              
@@ -640,6 +657,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
