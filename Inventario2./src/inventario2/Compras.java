@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inventario2;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -46,6 +41,8 @@ public class Compras extends javax.swing.JFrame {
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE); 
          Costo.setText("");
          Cantidad.setText("");
+         Serie.setText("");
+         Numero.setText("");
         try {
 
             Statement sx = Consulta.createStatement();
@@ -133,6 +130,10 @@ public class Compras extends javax.swing.JFrame {
         Apellido = new javax.swing.JLabel();
         Direccion = new javax.swing.JLabel();
         Nombre2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        Telefono = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        Numero = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         Cantidad = new javax.swing.JTextField();
         Marca = new javax.swing.JLabel();
@@ -198,7 +199,7 @@ public class Compras extends javax.swing.JFrame {
 
         jLabel10.setText("Nombre");
 
-        jLabel11.setText("Apellido");
+        jLabel11.setText("Representante");
 
         jLabel12.setText("Direccion");
 
@@ -209,6 +210,12 @@ public class Compras extends javax.swing.JFrame {
         Direccion.setText("jLabel15");
 
         Nombre2.setText("jLabel9");
+
+        jLabel9.setText("Telefono");
+
+        Telefono.setText("jLabel14");
+
+        jLabel14.setText("Numero");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -233,23 +240,31 @@ public class Compras extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Nombre2)
                                     .addComponent(Direccion)
-                                    .addComponent(Apellido)))
+                                    .addComponent(Apellido)
+                                    .addComponent(Telefono)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(386, Short.MAX_VALUE))
+                                .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(212, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jButton1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
-                            .addComponent(Otro1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton3))
+                                    .addComponent(Otro1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel9))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -264,7 +279,9 @@ public class Compras extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Serie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(Numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -277,20 +294,29 @@ public class Compras extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(Direccion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(Telefono))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(Otro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Cantidad");
 
+        Cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CantidadActionPerformed(evt);
+            }
+        });
         Cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 CantidadKeyTyped(evt);
@@ -358,17 +384,16 @@ public class Compras extends javax.swing.JFrame {
                                 .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5)))
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(91, 91, 91))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(Otro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -385,8 +410,11 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(60, 60, 60)
-                        .addComponent(jButton4)))
-                .addContainerGap(148, Short.MAX_VALUE))
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         pack();
@@ -416,9 +444,11 @@ public class Compras extends javax.swing.JFrame {
 
     private void compra(String PI, String LI) {
         try {
-            try (PreparedStatement CrearCompra = tr.prepareStatement("INSERT INTO Compra(Proveedor_id,Lote_id) VALUES(?,?)")) {
+            try (PreparedStatement CrearCompra = tr.prepareStatement("INSERT INTO Compra(Proveedor_id,Lote_id,Serie,Numero) VALUES(?,?,?,?)")) {
                 CrearCompra.setString(1, PI);
                 CrearCompra.setString(2, LI);
+                CrearCompra.setString(3, Serie.getText());
+                CrearCompra.setString(4, Numero.getText());
                 
                 CrearCompra.executeUpdate();
             }
@@ -434,7 +464,7 @@ public class Compras extends javax.swing.JFrame {
             int idUsuario = 0;
             float CostoTotal = Float.parseFloat(Costo.getText()) * Float.parseFloat(Cantidad.getText());
 
-            PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Fecha) VALUES(?,?,?,?,?,?,now())",
+            PreparedStatement CrearLot = tr.prepareStatement("INSERT INTO Lote(Producto_id,CostoUnitario,Cantidad,CostoTotal,Descripcion,NoLote,Disponible,Fecha) VALUES(?,?,?,?,?,?,1,now())",
                     Statement.RETURN_GENERATED_KEYS);
 
             CrearLot.setString(1, String.valueOf(idProd));
@@ -465,10 +495,11 @@ public class Compras extends javax.swing.JFrame {
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-             if(Cantidad.getText().equals("")&&Costo.getText().equals(""))   
+      if(Cantidad.getText().equals("")||Costo.getText().equals("")||Numero.getText().equals("")
+              ||Serie.getText().equals(""))   
      {
               
-        JOptionPane.showMessageDialog(null, "Ingrese Cantidad y Costo correctamente");
+        JOptionPane.showMessageDialog(null, "Revise que no tenga ni un campo vacio");
 
      }
      else
@@ -476,6 +507,9 @@ public class Compras extends javax.swing.JFrame {
          int iddd = getidPro(Nombre.getText(), Marca.getText());
         int loteee = lotereciente(iddd);
         CrearLote(iddd, loteee, obtenerid(nitglobal));
+        JOptionPane.showMessageDialog(null, "Producto Comprado Con Exito");
+        dispose();
+
      }
         
 
@@ -487,13 +521,14 @@ public class Compras extends javax.swing.JFrame {
           String idProv=null;
           try {
             Statement st = cn.createStatement();
-            ResultSet rd = st.executeQuery("SELECT Nombre, Apellido, Direccion,id FROM Proveedor WHERE Nit ='" +nit+ "'");
+            ResultSet rd = st.executeQuery("SELECT Nombre, Representante, Direccion,Numero,id FROM Proveedor WHERE Nit ='" +nit+ "'");
             while(rd.next())
             {
                 Nombre2.setText(rd.getString(1));
                 Apellido.setText(rd.getString(2));
                 Direccion.setText(rd.getString(3));
-                idProv=rd.getString(4);
+                Telefono.setText(rd.getString(4));
+                idProv=rd.getString(5);
             }
             return idProv;
         } catch (SQLException ex) {
@@ -591,6 +626,10 @@ public class Compras extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void CantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CantidadActionPerformed
+
 //     if(Cantidad.getText().equals("")&&Costo.getText().equals(""))   usando tabla
 //     {
 //              
@@ -651,9 +690,11 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel Marca;
     private javax.swing.JLabel Nombre;
     private javax.swing.JLabel Nombre2;
+    private javax.swing.JTextField Numero;
     private javax.swing.JComboBox<String> Otro;
     private javax.swing.JComboBox<String> Otro1;
     private javax.swing.JTextField Serie;
+    private javax.swing.JLabel Telefono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -663,6 +704,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -670,6 +712,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
