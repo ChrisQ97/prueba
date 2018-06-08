@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -48,17 +50,29 @@ public class MostrarLotes extends javax.swing.JFrame {
             modeloBusqueda.addColumn("Costo Unitario");
             modeloBusqueda.addColumn("Costo Total");
             modeloBusqueda.addColumn("Descripcion");
-            
+            modeloBusqueda.addColumn("Precio Unitario");
+            modeloBusqueda.addColumn("Precio Total");
+            modeloBusqueda.addColumn("Proveedor");
+            modeloBusqueda.addColumn("Ganancia");
             Lote.setModel(modeloBusqueda);
-
-            String datos[] = new String[6];
+            
+            
+           
+      
+            
+            String datos[] = new String[10];
 
           try {
 
             Statement sx = Consulta.createStatement();
-            ResultSet Ca = sx.executeQuery("SELECT L.NoLote,L.Fecha,L.Cantidad,L.CostoUnitario,L.CostoTotal,L.Descripcion FROM Lote L\n" +
-"inner JOIN Producto P \n" +
-"on P.id=L.Producto_id WHERE P.Marca='"+Marca+"' && P.Nombre='"+Nombre+"';");
+            ResultSet Ca = sx.executeQuery("SELECT L.NoLote,L.Fecha,L.Cantidad,L.CostoUnitario,L.CostoTotal,L.Descripcion,L.PrecioUnitario,L.PrecioTotal,V.Nombre,L.Ganancia FROM Producto P \n" +
+"inner JOIN Lote L \n" +
+"on P.id=L.Producto_id \n" +
+"inner JOIN Compra C\n" +
+"on C.Lote_id=L.id\n" +
+"inner JOIN Proveedor V\n" +
+"on V.id=C.Proveedor_id\n" +
+"WHERE P.Marca= '"+Marca+"'&& P.Nombre='"+Nombre+"';");
           
             while (Ca.next()) {
                
@@ -68,6 +82,10 @@ public class MostrarLotes extends javax.swing.JFrame {
                 datos[3] = Ca.getString(4);
                 datos[4] = Ca.getString(5);
                 datos[5] = Ca.getString(6);
+                datos[6] = Ca.getString(7);
+                datos[7] = Ca.getString(8);
+                datos[8] = Ca.getString(9);
+                datos[9] = Ca.getString(10)+"%";
                 modeloBusqueda.addRow(datos);
                 
             }
@@ -77,7 +95,9 @@ public class MostrarLotes extends javax.swing.JFrame {
             Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
         }
         Lote.setVisible(true);
-        
+        Lote.getColumn("No Lote").setPreferredWidth(15);
+        Lote.getColumn("Fecha").setPreferredWidth(120);
+        Lote.getColumn("Cantidad").setPreferredWidth(10);
     }
 
     /**
@@ -89,14 +109,29 @@ public class MostrarLotes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Lote = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         Nombre = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Marca = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Lote = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(189, 189, 189));
+
+        Nombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Nombre.setText("Nombre");
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setText("Producto");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setText("Marca");
+
+        Marca.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Marca.setText("jLabel4");
 
         Lote.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,44 +151,50 @@ public class MostrarLotes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Lote);
 
-        jLabel1.setText("Producto");
-
-        Nombre.setText("Nombre");
-
-        jLabel3.setText("Marca");
-
-        Marca.setText("jLabel4");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Nombre)
+                    .addComponent(Marca))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Nombre)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(Marca))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Nombre)
-                .addGap(96, 96, 96)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Marca)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(Nombre)
-                    .addComponent(jLabel3)
-                    .addComponent(Marca))
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -204,6 +245,7 @@ public class MostrarLotes extends javax.swing.JFrame {
     private javax.swing.JLabel Nombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

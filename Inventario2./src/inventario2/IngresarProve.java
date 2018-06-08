@@ -5,6 +5,8 @@
  */
 package inventario2;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,6 +32,17 @@ public class IngresarProve extends javax.swing.JFrame {
      */
     public IngresarProve() {
         initComponents();
+        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
+        this.setResizable(false);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();    
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        Nombre.setText("");
+                Nit.setText("");
+                Direccion.setText("");
+                Representante.setText("");
+                Telefono.setText("");
+                Correo.setText("");
+        
     }
 
     /**
@@ -41,6 +54,7 @@ public class IngresarProve extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -52,22 +66,35 @@ public class IngresarProve extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel5 = new javax.swing.JLabel();
         Telefono = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        Correo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(189, 189, 189));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel1.setText("Nombre");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 14, -1, -1));
 
         jLabel2.setText("Dirección");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 114, -1, -1));
 
         jLabel3.setText("Representante");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 51, -1, -1));
 
         jLabel4.setText("Nit");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 84, -1, -1));
+        jPanel1.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 12, 180, -1));
+        jPanel1.add(Representante, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 49, 180, -1));
+        jPanel1.add(Nit, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 80, 106, -1));
 
         Direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DireccionActionPerformed(evt);
             }
         });
+        jPanel1.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 112, 302, -1));
 
         jToggleButton1.setText("Agregar");
         jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -75,69 +102,33 @@ public class IngresarProve extends javax.swing.JFrame {
                 jToggleButton1MouseClicked(evt);
             }
         });
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 98, 38));
 
         jLabel5.setText("Telefono");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 82, -1, -1));
 
         Telefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TelefonoKeyTyped(evt);
             }
         });
+        jPanel1.add(Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 80, 110, -1));
+
+        jLabel6.setText("Correo");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+        jPanel1.add(Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 300, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Nit, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5))
-                                    .addComponent(Nombre)
-                                    .addComponent(Representante))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Direccion))))
-                .addContainerGap(82, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(Representante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Nit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,12 +139,13 @@ public class IngresarProve extends javax.swing.JFrame {
     }//GEN-LAST:event_DireccionActionPerformed
     private void CrearPro() {
         try {
-            PreparedStatement CrearPro = cn.prepareStatement("INSERT INTO Proveedor(Nombre,Representante,Nit,Direccion,Numero) VALUES(?,?,?,?,?)");
+            PreparedStatement CrearPro = cn.prepareStatement("INSERT INTO Proveedor(Nombre,Representante,Nit,Direccion,Numero,Correo) VALUES(?,?,?,?,?,?)");
             CrearPro.setString(1, Nombre.getText());
             CrearPro.setString(2, Representante.getText());
             CrearPro.setString(3, Nit.getText());
             CrearPro.setString(4, Direccion.getText());
             CrearPro.setString(5, Telefono.getText());
+            CrearPro.setString(6, Correo.getText());
             CrearPro.executeUpdate();
             CrearPro.close();
             JOptionPane.showMessageDialog(null, "Nuevo Proveedor Agregado");
@@ -164,7 +156,13 @@ public class IngresarProve extends javax.swing.JFrame {
 
     }
     private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
+        if(Nombre.getText().equals("")||Representante.getText().equals("")||Nit.getText().equals("")
+                ||Telefono.getText().equals("")||Direccion.getText().equals("")||Correo.getText().equals(""))
+        {
+           JOptionPane.showMessageDialog(null, "Revise que todos los campos esten llenos");
 
+        }
+        else {
         try {
             Statement st = cn.createStatement();
             ResultSet rd = st.executeQuery("SELECT Nit FROM Proveedor WHERE Nit ='" + Nit.getText() + "'");
@@ -181,6 +179,7 @@ public class IngresarProve extends javax.swing.JFrame {
                 Direccion.setText("");
                 Representante.setText("");
                 Telefono.setText("");
+                Correo.setText("");
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usted ya tiene Registrado el Nit " + Nit.getText());
@@ -189,6 +188,7 @@ public class IngresarProve extends javax.swing.JFrame {
                 Direccion.setText("");
                 Representante.setText("");
                 Telefono.setText("");
+                Correo.setText("");
 
 
             }
@@ -196,6 +196,7 @@ public class IngresarProve extends javax.swing.JFrame {
             Logger.getLogger(IngresarProve.class.getName()).log(Level.SEVERE, null, ex);
         }
         dispose();
+        }
 
     }//GEN-LAST:event_jToggleButton1MouseClicked
 
@@ -254,6 +255,7 @@ public class IngresarProve extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Correo;
     private javax.swing.JTextField Direccion;
     private javax.swing.JTextField Nit;
     private javax.swing.JTextField Nombre;
@@ -264,6 +266,8 @@ public class IngresarProve extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
