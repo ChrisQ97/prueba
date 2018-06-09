@@ -5,6 +5,7 @@
  */
 package inventario2;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -73,6 +74,7 @@ public class Ingreso extends javax.swing.JFrame {
      
             }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -355,6 +357,12 @@ public class Ingreso extends javax.swing.JFrame {
 
         jLabel17.setText("Codigo");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
+
+        Codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CodigoActionPerformed(evt);
+            }
+        });
         jPanel2.add(Codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 70, -1));
 
         jLabel18.setText("%");
@@ -364,7 +372,7 @@ public class Ingreso extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,6 +489,7 @@ public class Ingreso extends javax.swing.JFrame {
 
 
     }
+    
      private static Double formatearDecimales(Double numero, Integer numeroDecimales) {
 return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales);
 }
@@ -587,13 +596,6 @@ return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroD
 
             
     }
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-    
-       
-      
-
-    }//GEN-LAST:event_jButton1MouseClicked
-
     private void ProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ProductoActionPerformed
@@ -663,70 +665,6 @@ return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroD
            return -5;
 
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         
-        if(Producto.getText().equals("")||Marca.getText().equals("")||Costo.getText().equals("")
-               ||Cantidad.getText().equals("")||Serie.getText().equals("")||Numero.getText().equals("")||Ganancia.getText().equals("")
-                ||Codigo.getText().equals(""))
-        {
-         JOptionPane.showMessageDialog(null, "Verifique que algun campo no este vacios");
-
-        }
-        else
-        {
-            if(codigo()!=-5){
-            try {
-            Statement st = cn.createStatement();
-            ResultSet rd = st.executeQuery("SELECT Nombre, Marca,Codigo FROM Producto WHERE Nombre ='" + Producto.getText() + "' && Marca ='" + Marca.getText() + "' ");
-            int CR = 0;
-            while (rd.next()) {
-                CR++;
-            }
-
-            if (CR == 0) {
-                int id = 0;
-                id = CrearProducto();
-                
-                if (id != 0) {
-                    CrearLote(id);
-                    CrearReg(id);
-
-                    Producto.setText("");
-                    Costo.setText("");
-                    Cantidad.setText("");
-                    Marca.setText("");
-                    Descripcion.setText("");
-                }
-               
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Usted ya tiene este Producto con el mismo NOMBRE y MARCA, o Codigo");
-                Producto.setText("");
-                Costo.setText("");
-                Cantidad.setText("");
-                Marca.setText("");
-                Descripcion.setText("");
-               
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error x86 \nEL error pudo generarlo al momento de ingresar los campos \nPor favor Verifique");
-
-        }
-
-        dispose();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "El Codigo Del Producto ya esta siendo utilizado");
-                Codigo.setText("");
-
-            }
-        }
-        // TODO add your handling code here
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MarcaActionPerformed
@@ -738,15 +676,6 @@ return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroD
 
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    private void OtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OtroActionPerformed
-        nitglobal=(String) Otro.getSelectedItem();
-        String id3=null;
-        id3=obtenerid(nitglobal);
-
-      
-        
-    }//GEN-LAST:event_OtroActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Otro.removeAllItems();
         try {
@@ -765,10 +694,6 @@ return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroD
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void NumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NumeroActionPerformed
 
     private void GananciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GananciaActionPerformed
         // TODO add your handling code here:
@@ -792,6 +717,87 @@ return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroD
             Ganancia.transferFocus();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_GananciaKeyTyped
+
+    private void CodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CodigoActionPerformed
+      JOptionPane.showMessageDialog(null, "Ingreso");// TODO add your handling code here:
+    }//GEN-LAST:event_CodigoActionPerformed
+
+    private void OtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OtroActionPerformed
+        nitglobal=(String) Otro.getSelectedItem();
+        String id3=null;
+        id3=obtenerid(nitglobal);
+    }//GEN-LAST:event_OtroActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        if(Producto.getText().equals("")||Marca.getText().equals("")||Costo.getText().equals("")
+            ||Cantidad.getText().equals("")||Serie.getText().equals("")||Numero.getText().equals("")||Ganancia.getText().equals("")
+            ||Codigo.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Verifique que algun campo no este vacios");
+
+        }
+        else
+        {
+            if(codigo()!=-5){
+                try {
+                    Statement st = cn.createStatement();
+                    ResultSet rd = st.executeQuery("SELECT Nombre, Marca,Codigo FROM Producto WHERE Nombre ='" + Producto.getText() + "' && Marca ='" + Marca.getText() + "' ");
+                    int CR = 0;
+                    while (rd.next()) {
+                        CR++;
+                    }
+
+                    if (CR == 0) {
+                        int id = 0;
+                        id = CrearProducto();
+
+                        if (id != 0) {
+                            CrearLote(id);
+                            CrearReg(id);
+
+                            Producto.setText("");
+                            Costo.setText("");
+                            Cantidad.setText("");
+                            Marca.setText("");
+                            Descripcion.setText("");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usted ya tiene este Producto con el mismo NOMBRE y MARCA, o Codigo");
+                        Producto.setText("");
+                        Costo.setText("");
+                        Cantidad.setText("");
+                        Marca.setText("");
+                        Descripcion.setText("");
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Error x86 \nEL error pudo generarlo al momento de ingresar los campos \nPor favor Verifique");
+
+                }
+
+                dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "El Codigo Del Producto ya esta siendo utilizado");
+                Codigo.setText("");
+
+            }
+        }
+        // TODO add your handling code here
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void NumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NumeroActionPerformed
 
     private String obtenerid(String nit)
     {

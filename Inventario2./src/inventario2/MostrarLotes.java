@@ -72,7 +72,7 @@ public class MostrarLotes extends javax.swing.JFrame {
 "on C.Lote_id=L.id\n" +
 "inner JOIN Proveedor V\n" +
 "on V.id=C.Proveedor_id\n" +
-"WHERE P.Marca= '"+Marca+"'&& P.Nombre='"+Nombre+"';");
+"WHERE P.Marca= '"+Marca+"'&& L.Disponible=true &&P.Nombre='"+Nombre+"';");
           
             while (Ca.next()) {
                
